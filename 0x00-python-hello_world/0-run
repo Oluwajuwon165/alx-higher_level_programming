@@ -1,2 +1,2 @@
 #!/bin/bash
-This_is_python.py
+This_is_python $PYFILE
