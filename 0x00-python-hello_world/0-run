@@ -1,2 +1,2 @@
 #!/bin/bash
-Python_world.py -c
+python3 Python_world.py
