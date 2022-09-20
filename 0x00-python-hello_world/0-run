@@ -1,2 +1,2 @@
 #!/bin/bash
-Python python_script.py
+This_is_a_script $PYFILE
