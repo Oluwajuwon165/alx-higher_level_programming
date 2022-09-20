@@ -1,2 +1,2 @@
 #!/bin/bash
-You_need_a_python_code $PYCODE
+python3 -c "$PYCODE"
