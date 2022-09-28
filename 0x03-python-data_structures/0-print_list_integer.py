@@ -1,4 +1,5 @@
-a, b = 0, 1
-while a < 10:
-   print(a)
-   a, b = b, a+b
+#!/usr/bin/python3
+
+def print_list_integer(my_list=[]):
+    for i in my_list:
+        print("{:d}".format(i))
