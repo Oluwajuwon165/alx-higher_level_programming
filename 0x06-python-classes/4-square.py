@@ -1,49 +1,50 @@
 #!/usr/bin/python3
-"""Defines a class Square"""
+"""
+A module containing the square class task 4
+"""
 
 
 class Square:
-    """Represents a square
-    Attributes:
-        __size (int): size of a side of the square
+    """
+    A square class for the alx project
     """
     def __init__(self, size=0):
-        """initializes the square
+        """
+        Initialize the class
         Args:
-            size (int): size of a side of the square
-        Returns:
-            None
+            size: The size of the square
         """
         self.size = size
 
-    def area(self):
-        """calculates the square's area
-        Returns:
-            The area of the square
-        """
-        return (self.__size) ** 2
-
     @property
     def size(self):
-        """getter of __size
+        """
+        A function for the square size
         Returns:
-            The size of the square
+            The size of the square (int)
         """
         return self.__size
 
     @size.setter
     def size(self, value):
-        """setter of __size
-        Args:
-            value (int): the size of a size of the square
-        Returns:
-            None
         """
-        if type(value) is not int:
+        A function to set the square size
+        Args:
+            value: The new size of the square
+        Returns:
+            Null void
+        """
+        if type(value) != int:
             raise TypeError("size must be an integer")
+        elif value < 0:
+            raise ValueError("size must be >= 0")
         else:
-            if value < 0:
-                raise ValueError("size must be >= 0")
-            else:
-                self.__size = value
+            self.__size = value
 
+    def area(self):
+        """
+        A function to get the area of the square
+        Returns:
+            The area of the square (int)
+        """
+        return self.__size ** 2
