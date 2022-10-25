@@ -1,4 +1,4 @@
-    pass#!/usr/bin/python3
+#!/usr/bin/python3
 """
 Contains the clas "Student"
 """
@@ -31,4 +31,4 @@ class Student:
             try:
                 setattr(self, key, json[key])
             except FileNotFoundError:
-            
+                pass
