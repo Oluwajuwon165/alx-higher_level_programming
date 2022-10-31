@@ -256,7 +256,32 @@ class TestSquare_y(unittest.TestCase):
             Square(1, 1, {"a": 1, "b": 2})
 
     def test_list_y(self):
-        with s         Square(1, 3, bytearray(b'abcdefg'))
+        with self.assertRaisesRegex(TypeError, "y must be an integer"):
+            Square(1, 1, [1, 2, 3])
+
+    def test_set_y(self):
+        with self.assertRaisesRegex(TypeError, "y must be an integer"):
+            Square(1, 1, {1, 2, 3})
+
+    def test_tuple_y(self):
+        with self.assertRaisesRegex(TypeError, "y must be an integer"):
+            Square(1, 1, (1, 2, 3))
+
+    def test_frozenset_y(self):
+        with self.assertRaisesRegex(TypeError, "y must be an integer"):
+            Square(1, 3, frozenset({1, 2, 3, 1}))
+
+    def test_range_y(self):
+        with self.assertRaisesRegex(TypeError, "y must be an integer"):
+            Square(1, 3, range(5))
+
+    def test_bytes_y(self):
+        with self.assertRaisesRegex(TypeError, "y must be an integer"):
+            Square(1, 3, b'Python')
+
+    def test_bytearray_y(self):
+        with self.assertRaisesRegex(TypeError, "y must be an integer"):
+            Square(1, 3, bytearray(b'abcdefg'))
 
     def test_memoryview_y(self):
         with self.assertRaisesRegex(TypeError, "y must be an integer"):
@@ -524,7 +549,34 @@ class TestSquare_update_kwargs(unittest.TestCase):
         s.update(y=1, size=3, id=89)
         self.assertEqual("[Square] (89) 10/1 - 3", str(s))
 
-    def test_update_kwatwice(self):
+    def test_update_kwargs_four(self):
+        s = Square(10, 10, 10, 10)
+        s.update(id=89, x=1, y=3, size=4)
+        self.assertEqual("[Square] (89) 1/3 - 4", str(s))
+
+    def test_update_kwargs_width_setter(self):
+        s = Square(10, 10, 10, 10)
+        s.update(id=89, size=8)
+        self.assertEqual(8, s.width)
+
+    def test_update_kwargs_height_setter(self):
+        s = Square(10, 10, 10, 10)
+        s.update(id=89, size=9)
+        self.assertEqual(9, s.height)
+
+    def test_update_kwargs_None_id(self):
+        s = Square(10, 10, 10, 10)
+        s.update(id=None)
+        correct = "[Square] ({}) 10/10 - 10".format(s.id)
+        self.assertEqual(correct, str(s))
+
+    def test_update_kwargs_None_id_and_more(self):
+        s = Square(10, 10, 10, 10)
+        s.update(id=None, size=7, x=18)
+        correct = "[Square] ({}) 18/10 - 7".format(s.id)
+        self.assertEqual(correct, str(s))
+
+    def test_update_kwargs_twice(self):
         s = Square(10, 10, 10, 10)
         s.update(id=89, x=1)
         s.update(y=3, x=15, size=2)
@@ -601,56 +653,4 @@ class TestSquare_to_dictionary(unittest.TestCase):
             s.to_dictionary(1)
 
 if __name__ == "__main__":
-    unittest.main()elf.assertRaisesRegex(TypeError, "y must be an integer"):
-            Square(1, 1, [1, 2, 3])
-
-    def test_set_y(self):
-        with self.assertRaisesRegex(TypeError, "y must be an integer"):
-            Square(1, 1, {1, 2, 3})
-
-    def test_tuple_y(self):
-        with self.assertRaisesRegex(TypeError, "y must be an integer"):
-            Square(1, 1, (1, 2, 3))
-
-    def test_frozenset_y(self):
-        with self.assertRaisesRegex(TypeError, "y must be an integer"):
-            Square(1, 3, frozenset({1, 2, 3, 1}))
-
-    def test_range_y(self):
-        with self.assertRaisesRegex(TypeError, "y must be an integer"):
-            Square(1, 3, range(5))
-
-    def test_bytes_y(self):
-        with self.assertRaisesRegex(TypeError, "y must be an integer"):
-            Square(1, 3, b'Python')
-
-    def test_bytearray_y(self):
-        with self.assertRaisesRegex(TypeError, "y must be an integer"):
-   rgs_four(self):
-        s = Square(10, 10, 10, 10)
-        s.update(id=89, x=1, y=3, size=4)
-        self.assertEqual("[Square] (89) 1/3 - 4", str(s))
-
-    def test_update_kwargs_width_setter(self):
-        s = Square(10, 10, 10, 10)
-        s.update(id=89, size=8)
-        self.assertEqual(8, s.width)
-
-    def test_update_kwargs_height_setter(self):
-        s = Square(10, 10, 10, 10)
-        s.update(id=89, size=9)
-        self.assertEqual(9, s.height)
-
-    def test_update_kwargs_None_id(self):
-        s = Square(10, 10, 10, 10)
-        s.update(id=None)
-        correct = "[Square] ({}) 10/10 - 10".format(s.id)
-        self.assertEqual(correct, str(s))
-
-    def test_update_kwargs_None_id_and_more(self):
-        s = Square(10, 10, 10, 10)
-        s.update(id=None, size=7, x=18)
-        correct = "[Square] ({}) 18/10 - 7".format(s.id)
-        self.assertEqual(correct, str(s))
-
-    def test_update_kwargs_
+    unittest.main()
