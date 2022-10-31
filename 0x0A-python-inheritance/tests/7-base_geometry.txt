@@ -86,10 +86,7 @@ Checking for non-integer types:
          Traceback (most recent call last):
          ...
          TypeError: set must be an integer
-	 >>> b.integer_validator("frozenset", frozenset(["hello"dator("integer", 1, 2)
-	 Traceback (most recent call last):
-         ...
-	 TypeError: integer_validator() takes 3 positional arguments but 4 were given, "world"]))
+	 >>> b.integer_validator("frozenset", frozenset(["hello", "world"]))
          Traceback (most recent call last):
          ...
          TypeError: frozenset must be an integer
