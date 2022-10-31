@@ -1,4 +1,36 @@
-      with self.assertRaises(TypeError):
+#!/usr/bin/python3
+"""Defines unittests for models/rectangle.py.
+Unittest classes:
+    TestRectangle_instantiation - line 25
+    TestRectangle_width - line 114
+    TestRectangle_height - line 190
+    TestRectangle_x - line 262
+    TestRectangle_y - line 334
+    TestRectangle_order_of_initialization - line 402
+    TestRectangle_area - line 430
+    TestRectangle_update_args - line 538
+    TestRectangle_update_kwargs - line 676
+    TestRectangle_to_dictionary - line 788
+"""
+import io
+import sys
+import unittest
+from models.base import Base
+from models.rectangle import Rectangle
+
+
+class TestRectangle_instantiation(unittest.TestCase):
+    """Unittests for testing instantiation of the Rectangle class."""
+
+    def test_rectangle_is_base(self):
+        self.assertIsInstance(Rectangle(10, 2), Base)
+
+    def test_no_args(self):
+        with self.assertRaises(TypeError):
+            Rectangle()
+
+    def test_one_arg(self):
+        with self.assertRaises(TypeError):
             Rectangle(1)
 
     def test_two_args(self):
@@ -191,7 +223,31 @@ class TestRectangle_height(unittest.TestCase):
         with self.assertRaisesRegex(TypeError, "height must be an integer"):
             Rectangle(1, frozenset({1, 2, 3, 1}))
 
-    def test_range_height(selfght(self):
+    def test_range_height(self):
+        with self.assertRaisesRegex(TypeError, "height must be an integer"):
+            Rectangle(1, range(5))
+
+    def test_bytes_height(self):
+        with self.assertRaisesRegex(TypeError, "height must be an integer"):
+            Rectangle(1, b'Python')
+
+    def test_bytearray_height(self):
+        with self.assertRaisesRegex(TypeError, "height must be an integer"):
+            Rectangle(1, bytearray(b'abcdefg'))
+
+    def test_memoryview_height(self):
+        with self.assertRaisesRegex(TypeError, "height must be an integer"):
+            Rectangle(1, memoryview(b'abcedfg'))
+
+    def test_inf_height(self):
+        with self.assertRaisesRegex(TypeError, "height must be an integer"):
+            Rectangle(1, float('inf'))
+
+    def test_nan_height(self):
+        with self.assertRaisesRegex(TypeError, "height must be an integer"):
+            Rectangle(1, float('nan'))
+
+    def test_negative_height(self):
         with self.assertRaisesRegex(ValueError, "height must be > 0"):
             Rectangle(1, -1)
 
@@ -449,7 +505,28 @@ class TestRectangle_stdout(unittest.TestCase):
     # Test display method
     def test_display_width_height(self):
         r = Rectangle(2, 3, 0, 0, 0)
-        capture = ctangle(5, 1, 2, 4, 7)
+        capture = TestRectangle_stdout.capture_stdout(r, "display")
+        self.assertEqual("##\n##\n##\n", capture.getvalue())
+
+    def test_display_width_height_x(self):
+        r = Rectangle(3, 2, 1, 0, 1)
+        capture = TestRectangle_stdout.capture_stdout(r, "display")
+        self.assertEqual(" ###\n ###\n", capture.getvalue())
+
+    def test_display_width_height_y(self):
+        r = Rectangle(4, 5, 0, 1, 0)
+        capture = TestRectangle_stdout.capture_stdout(r, "display")
+        display = "\n####\n####\n####\n####\n####\n"
+        self.assertEqual(display, capture.getvalue())
+
+    def test_display_width_height_x_y(self):
+        r = Rectangle(2, 4, 3, 2, 0)
+        capture = TestRectangle_stdout.capture_stdout(r, "display")
+        display = "\n\n   ##\n   ##\n   ##\n   ##\n"
+        self.assertEqual(display, capture.getvalue())
+
+    def test_display_one_arg(self):
+        r = Rectangle(5, 1, 2, 4, 7)
         with self.assertRaises(TypeError):
             r.display(1)
 
@@ -690,95 +767,7 @@ class TestRectangle_update_kwargs(unittest.TestCase):
 
     def test_update_args_and_kwargs(self):
         r = Rectangle(10, 10, 10, 10, 10)
-   0, 2, 1, 9, 5)
-        r2 = Rectangle(5, 9, 1, 2, 10)
-        r2.update(**r1.to_dictionary())
-        self.assertNotEqual(r1, r2)
-
-    def test_to_dictionary_arg(self):
-        r = Rectangle(10, 2, 4, 1, 2)
-        with self.assertRaises(TypeError):
-            r.to_dictionary(1)
-
-if __name__ == "__main__":
-    unittest.main()#!/usr/bin/python3
-"""Defines unittests for models/rectangle.py.
-Unittest classes:
-    TestRectangle_instantiation - line 25
-    TestRectangle_width - line 114
-    TestRectangle_height - line 190
-    TestRectangle_x - line 262
-    TestRectangle_y - line 334
-    TestRectangle_order_of_initialization - line 402
-    TestRectangle_area - line 430
-    TestRectangle_update_args - line 538
-    TestRectangle_update_kwargs - line 676
-    TestRectangle_to_dictionary - line 788
-"""
-import io
-import sys
-import unittest
-from models.base import Base
-from models.rectangle import Rectangle
-
-
-class TestRectangle_instantiation(unittest.TestCase):
-    """Unittests for testing instantiation of the Rectangle class."""
-
-    def test_rectangle_is_base(self):
-        self.assertIsInstance(Rectangle(10, 2), Base)
-
-    def test_no_args(self):
-        with self.assertRaises(TypeError):
-            Rectangle()
-
-    def test_one_arg(self):
-  ):
-        with self.assertRaisesRegex(TypeError, "height must be an integer"):
-            Rectangle(1, range(5))
-
-    def test_bytes_height(self):
-        with self.assertRaisesRegex(TypeError, "height must be an integer"):
-            Rectangle(1, b'Python')
-
-    def test_bytearray_height(self):
-        with self.assertRaisesRegex(TypeError, "height must be an integer"):
-            Rectangle(1, bytearray(b'abcdefg'))
-
-    def test_memoryview_height(self):
-        with self.assertRaisesRegex(TypeError, "height must be an integer"):
-            Rectangle(1, memoryview(b'abcedfg'))
-
-    def test_inf_height(self):
-        with self.assertRaisesRegex(TypeError, "height must be an integer"):
-            Rectangle(1, float('inf'))
-
-    def test_nan_height(self):
-        with self.assertRaisesRegex(TypeError, "height must be an integer"):
-            Rectangle(1, float('nan'))
-
-    def test_negative_heiTestRectangle_stdout.capture_stdout(r, "display")
-        self.assertEqual("##\n##\n##\n", capture.getvalue())
-
-    def test_display_width_height_x(self):
-        r = Rectangle(3, 2, 1, 0, 1)
-        capture = TestRectangle_stdout.capture_stdout(r, "display")
-        self.assertEqual(" ###\n ###\n", capture.getvalue())
-
-    def test_display_width_height_y(self):
-        r = Rectangle(4, 5, 0, 1, 0)
-        capture = TestRectangle_stdout.capture_stdout(r, "display")
-        display = "\n####\n####\n####\n####\n####\n"
-        self.assertEqual(display, capture.getvalue())
-
-    def test_display_width_height_x_y(self):
-        r = Rectangle(2, 4, 3, 2, 0)
-        capture = TestRectangle_stdout.capture_stdout(r, "display")
-        display = "\n\n   ##\n   ##\n   ##\n   ##\n"
-        self.assertEqual(display, capture.getvalue())
-
-    def test_display_one_arg(self):
-        r = Re     r.update(89, 2, height=4, y=6)
+        r.update(89, 2, height=4, y=6)
         self.assertEqual("[Rectangle] (89) 10/10 - 2/10", str(r))
 
     def test_update_kwargs_wrong_keys(self):
@@ -801,4 +790,15 @@ class TestRectangle_to_dictionary(unittest.TestCase):
         self.assertDictEqual(correct, r.to_dictionary())
 
     def test_to_dictionary_no_object_changes(self):
-        r1 = Rectangle(1
+        r1 = Rectangle(10, 2, 1, 9, 5)
+        r2 = Rectangle(5, 9, 1, 2, 10)
+        r2.update(**r1.to_dictionary())
+        self.assertNotEqual(r1, r2)
+
+    def test_to_dictionary_arg(self):
+        r = Rectangle(10, 2, 4, 1, 2)
+        with self.assertRaises(TypeError):
+            r.to_dictionary(1)
+
+if __name__ == "__main__":
+    unittest.main()
