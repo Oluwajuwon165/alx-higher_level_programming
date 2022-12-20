@@ -1,6 +1,6 @@
 #!/usr/bin/node
 
-let C = 'C us fun';
+let C = 'C is fun';
 let P = 'Python is cool';
 let J = 'JavaScript is amazing';
 console.log(C);
